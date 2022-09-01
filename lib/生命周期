@@ -1,0 +1,26 @@
+生命周期：
+
+1. initState()  首次调用， 只执行一次；
+2. didChangeDependencies() 当State对象当依赖发生变化时会被调用；
+3. build() 用于构建widget子树， 如下场景被调用
+    - 1)在调用initState()之后；
+    - 2)在调用didUpdateWidget()之后；
+    - 3)在调用setState()之后；
+    - 4)在调用didChangeDependencies()之后；
+    - 5)在State对象从树中一个位置移除后（会调用deactivate）又重新插入到树到其他位置之后。
+4. reassemble() 此回调是专门为了开发调试而提供的， 再热重载（hot reload）时会被调用，此回调在Release模式下永远不会被调用；
+5. didUpdateWidget() 在widget重新构建时，Flutter框架会调用widget.canUpdate来检测widget树中同一位置的新旧节点，然后决定是否需要更新， 如果widget.canUpdate返回true则会调用此回调；
+6. deactivate() 当State对象从树中被移除时，会调用此回调；
+7. dispose() 当State对象从树中被永久移除时调用；通常在此回调中释放资源；
+
+
+注意：在继承StatefulWidget重写其方法时，对于包含@mustCallSuper标注的父类方法，都要在子类方法中调用父类方法。
+
+在widget树中获取State对象
+1. 通过Context获取
+2. 通过GlobalKey
+    #GlobalKey 是 Flutter 提供的一种在整个 App 中引用 element 的机制。
+    #如果一个 widget 设置了GlobalKey，那么我们便可以通过globalKey.currentWidget获得该 widget 对象、globalKey.currentElement来获得 widget 对应的element对象，
+    #如果当前 widget 是StatefulWidget，则可以通过globalKey.currentState来获得该 widget 对应的state对象。
+    #注意：使用 GlobalKey 开销较大，如果有其他可选方案，应尽量避免使用它。另外，同一个 GlobalKey 在整个 widget 树中必须是唯一的，不能重复。
+
