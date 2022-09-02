@@ -18,18 +18,10 @@ class _FriendsPageState extends State<FriendsPage> {
   var _controller = ScrollController();
 
   var jumpOffset = 0.0;
-  var friendsDataList = [];
 
   @override
   void initState() {
     super.initState();
-    //定义排序规则
-    int i = 0;
-    friendsTopDatas.forEach((element) {
-      element.sort = i++;
-    });
-    friendsDataList.addAll(friendsTopDatas);
-    friendsDataList.addAll(friendsDatas);
 
   }
 
@@ -52,7 +44,7 @@ class _FriendsPageState extends State<FriendsPage> {
         children: [
           Container(
             color: Colors.black,
-            child: _createGroupedListView(),
+            child: _createFriendsPageView(),
           ),
           Positioned(
             top: 0,
@@ -75,27 +67,46 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
+  Widget _createFriendsPageView() {
+    return CustomScrollView(
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      controller: _controller,
+      slivers: [
+        SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              var element = friendsTopDatas[index];
+              return FriendsCell(
+                  element.name, element.assetPath, element.imageUrl);
+            }, childCount: friendsTopDatas.length),
+            itemExtent: 60),
+        SliverToBoxAdapter(
+          child: _createGroupedListView(),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+              height: 30,
+              alignment: Alignment.center,
+              child: Text("${friendsDatas.length}个朋友", style: TextStyle(fontSize: 13, color: Colors.white70),
+            ),
+          )
+        )
+      ],
+    );
+  }
+
   GroupedListView _createGroupedListView() {
     return GroupedListView(
-      controller: _controller,
+      shrinkWrap: true,
       physics: BouncingScrollPhysics(),
-      elements: friendsDataList,
+      elements: friendsDatas,
       groupBy: (element) => element.indexLetter,
       groupComparator: (value1, value2) => value2.compareTo(value1),
-      itemComparator: (item1, item2) {
-        if (item1.sort == null && item2.sort == null) {
-          return -(item1.name.compareTo(item2.name));
-        } else {
-          return -(item1.sort.compareTo(item2.sort));
-        }
-      },
+      itemComparator: (item1, item2) => -(item1.name.compareTo(item2.name)),
       order: GroupedListOrder.DESC,
       useStickyGroupSeparators: false,
       // stickyHeaderBackgroundColor: Colors.black,
       groupHeaderBuilder: (element) {
-        if (element.indexLetter == "*") {
-          return SizedBox();
-        }
         return Padding(
           padding: EdgeInsets.all(10),
           child: Text(element.indexLetter,

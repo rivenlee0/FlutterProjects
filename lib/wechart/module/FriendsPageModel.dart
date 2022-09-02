@@ -1,10 +1,9 @@
 class Friends {
   final String? imageUrl;
   final String? assetPath;
-  int? sort;
-  final String? name;
+  final String name;
   final String? indexLetter;
-  Friends({this.imageUrl, this.sort, this.name, this.indexLetter, this.assetPath});
+  Friends({this.imageUrl, required this.name, this.indexLetter, this.assetPath});
 }
 
 List <Friends> friendsTopDatas = [
