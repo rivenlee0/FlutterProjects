@@ -18,10 +18,19 @@ class _FriendsPageState extends State<FriendsPage> {
   var _controller = ScrollController();
 
   var jumpOffset = 0.0;
+  var friendsDataList = [];
 
   @override
   void initState() {
     super.initState();
+    //定义排序规则
+    int i = 0;
+    friendsTopDatas.forEach((element) {
+      element.sort = i++;
+    });
+    friendsDataList.addAll(friendsTopDatas);
+    friendsDataList.addAll(friendsDatas);
+
   }
 
   @override
@@ -70,20 +79,36 @@ class _FriendsPageState extends State<FriendsPage> {
     return GroupedListView(
       controller: _controller,
       physics: BouncingScrollPhysics(),
-      elements: friendsDatas,
+      elements: friendsDataList,
       groupBy: (element) => element.indexLetter,
       groupComparator: (value1, value2) => value2.compareTo(value1),
-      itemComparator: (item1, item2) => item1.name.compareTo(item2.name),
+      itemComparator: (item1, item2) {
+        if (item1.sort == null && item2.sort == null) {
+          return -(item1.name.compareTo(item2.name));
+        } else {
+          return -(item1.sort.compareTo(item2.sort));
+        }
+      },
       order: GroupedListOrder.DESC,
       useStickyGroupSeparators: false,
       // stickyHeaderBackgroundColor: Colors.black,
-      groupSeparatorBuilder: (value) {
+      groupHeaderBuilder: (element) {
+        if (element.indexLetter == "*") {
+          return SizedBox();
+        }
         return Padding(
           padding: EdgeInsets.all(10),
-          child: Text(value,
+          child: Text(element.indexLetter,
               style: TextStyle(fontSize: 12, color: Colors.white70)),
         );
       },
+      // groupSeparatorBuilder: (value) {
+      //   return Padding(
+      //     padding: EdgeInsets.all(10),
+      //     child: Text(value,
+      //         style: TextStyle(fontSize: 12, color: Colors.white70)),
+      //   );
+      // },
       indexedItemBuilder: (context, element, index) {
         return FriendsCell(element.name, element.assetPath, element.imageUrl);
       },

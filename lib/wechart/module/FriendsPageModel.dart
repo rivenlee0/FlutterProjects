@@ -1,31 +1,32 @@
 class Friends {
   final String? imageUrl;
   final String? assetPath;
+  int? sort;
   final String? name;
   final String? indexLetter;
-  const Friends({this.imageUrl, this.name, this.indexLetter, this.assetPath});
+  Friends({this.imageUrl, this.sort, this.name, this.indexLetter, this.assetPath});
 }
 
 List <Friends> friendsTopDatas = [
   Friends(
-      assetPath: 'images/new_friend.png',
+      assetPath: 'images/icon_new_friend.png',
       name: '新的朋友',
-      indexLetter: 'A'
+      indexLetter: '*'
   ),
   Friends(
-      assetPath: 'images/chart_group.png',
+      assetPath: 'images/icon_chart_group.png',
       name: '群聊',
-      indexLetter: 'A'
+      indexLetter: '*'
   ),
   Friends(
-      assetPath: 'images/tag.png',
+      assetPath: 'images/icon_tag.png',
       name: '标签',
-      indexLetter: 'A'
+      indexLetter: '*'
   ),
   Friends(
-      assetPath: 'images/gongzhonghao.png',
+      assetPath: 'images/icon_gongzhonghao.png',
       name: '公众号',
-      indexLetter: 'A'
+      indexLetter: '*'
   ),
 ];
 List <Friends> friendsDatas = [
