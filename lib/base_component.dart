@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_sample/wechart/WeCharMain.dart';
 
 class ComponentApp extends StatelessWidget {
@@ -217,6 +218,7 @@ class _SwitchAndCheckBoxTestRouteState
   }
 }
 
+
 class TextBtnImgTestRoute extends StatelessWidget {
   //字体库选择
   // static const textStyle = const TextStyle(
@@ -242,7 +244,7 @@ class TextBtnImgTestRoute extends StatelessWidget {
           "Hello World",
           textAlign: TextAlign.start,
         ),
-        Text("Hello World ! I am rivenLee !" * 3,
+        Text("Hello World ! I am rivenLee !" * 5,
             maxLines: 2, overflow: TextOverflow.ellipsis),
         Text(
           "Hello Word",
@@ -275,7 +277,7 @@ class TextBtnImgTestRoute extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("hello world"),
-                    Text("i am jack"),
+                    Text("i am jack", style: TextStyle(fontSize: 24)),
                     Text(
                       "i am lucy",
                       style: TextStyle(color: Colors.teal, fontSize: 15),
@@ -303,8 +305,97 @@ class TextBtnImgTestRoute extends StatelessWidget {
         Image.network(
           "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
           width: 100.0,
-        )
+        ),
+        BottomBtn()
       ],
     );
   }
 }
+
+class BottomBtn extends StatefulWidget {
+  const BottomBtn({Key? key}) : super(key: key);
+
+  @override
+  State<BottomBtn> createState() => _BottomBtnState();
+}
+
+class _BottomBtnState extends State<BottomBtn> {
+  @override
+  Widget build(BuildContext context) {
+    // return GestureDetector(
+    //     onTapDown: _handleTapDown,
+    //     onTapUp: _handleTapUp,
+    //     onTapCancel: _handleTapCancel,
+    //     child: Padding(
+    //         padding: new EdgeInsets.only(left: 15, right: 15, top: 10),
+    //         child: Container(
+    //           decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.all(Radius.circular(20)),
+    //               color: _active ? Colors.grey : Colors.cyan),
+    //           height: 40,
+    //           child:
+    //               Row(mainAxisAlignment: MainAxisAlignment.center,
+    //                   children: [
+    //                     Text("提交", style: TextStyle(color: Colors.white, fontSize: 18))
+    //           ]),
+    //         )));
+    // return Padding(
+    //     padding: new EdgeInsets.symmetric(horizontal: 15),
+    //     child: Ink(
+    //       decoration: BoxDecoration(
+    //           color: _active ? Colors.grey : Colors.cyan,
+    //           borderRadius: BorderRadius.all(Radius.circular(20))),
+    //       child: InkWell(
+    //         splashColor: Colors.cyanAccent,
+    //         child: Container(
+    //           padding: new EdgeInsets.symmetric(vertical: 10),
+    //           child:
+    //               Row(mainAxisAlignment: MainAxisAlignment.center,
+    //                   children: [
+    //                     Text("提交", style: TextStyle(color: Colors.white, fontSize: 18))
+    //                   ]),
+    //         ),
+    //       ),
+    //     ));
+    ButtonStyle buttonStyle = TextButton.styleFrom(
+        primary: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        backgroundColor: Colors.cyan,
+        textStyle: TextStyle(fontSize: 16)
+    );
+
+    return Container(
+        width: double.infinity,
+        height: 44,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: TextButton(
+            onPressed: () {
+            }, child: Text("提交"), style: buttonStyle));
+  }
+
+  bool _active = false;
+
+  void _handleTapDown(TapDownDetails details){
+    setState(() {
+      _active = true;
+    });
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    setState(() {
+      _active = false;
+    });
+  }
+
+  void _handleTapCancel() {
+    setState(() {
+      _active = false;
+    });
+  }
+}
+
+
+
+
