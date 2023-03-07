@@ -106,21 +106,22 @@ class _FriendsPageState extends State<FriendsPage> {
       order: GroupedListOrder.DESC,
       useStickyGroupSeparators: false,
       // stickyHeaderBackgroundColor: Colors.black,
-      groupHeaderBuilder: (element) {
-        return Padding(
-          padding: EdgeInsets.all(10),
-          child: Text(element.indexLetter,
-              style: TextStyle(fontSize: 12, color: Colors.white70)),
-        );
-      },
-      // groupSeparatorBuilder: (value) {
+      // groupHeaderBuilder: (element) {
       //   return Padding(
       //     padding: EdgeInsets.all(10),
-      //     child: Text(value,
+      //     child: Text(element.indexLetter,
       //         style: TextStyle(fontSize: 12, color: Colors.white70)),
       //   );
       // },
+      groupSeparatorBuilder: (value) {
+        return Padding(
+          padding: EdgeInsets.all(10),
+          child: Text(value,
+              style: TextStyle(fontSize: 12, color: Colors.white70)),
+        );
+      },
       indexedItemBuilder: (context, element, index) {
+        element as Friends;
         return FriendsCell(element.name, element.assetPath, element.imageUrl);
       },
       separator: SizedBox(height: 0.5),
